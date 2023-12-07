@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "db_pet_commerce",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "freedb_pet_commerce",
+    "password": "u2pBHq2**g!G2BX",
+    "database": "freedb_db_pet_commerce",
+    "host": "sql.freedb.tech",
+    "dialect": "mysql"
+  }
+}
