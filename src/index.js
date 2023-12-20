@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const corsOptions = {
-  origin: "https://dulcet-scone-92676f.netlify.app", // Mengizinkan akses dari alamat ini
+  origin: "http://localhost:5173", // Mengizinkan akses dari alamat ini
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };

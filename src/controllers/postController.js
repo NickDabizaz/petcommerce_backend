@@ -23,7 +23,7 @@ const getPostPic = (req, res) => {
   return res.status(200).sendFile(lokasinya, { root: "." });
 };
 
-let tempArrayLengkap = [];
+
 const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.findAll();

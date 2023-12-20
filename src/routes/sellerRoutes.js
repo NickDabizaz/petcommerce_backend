@@ -12,7 +12,6 @@ router.post(
 
 // get detail store
 router.get("/store/:store_id", sellerController.getDetailStore);
-
 // get store picture
 router.get("/store/pic/:store_id", sellerController.getStorePic);
 
@@ -27,7 +26,7 @@ router.post(
 router.get("/product/pic/:product_id", sellerController.getProductPic);
 
 // Route for seller to edit product in store
-router.put("/edit-product/:product_id", sellerController.editProduct);
+router.put("/:store_id/edit-product/:product_id", sellerController.editProduct);
 
 // Route for seller to delete product in store
 router.delete(

@@ -1,6 +1,7 @@
 // Importing Dependencies
 const { Order, OrderDetail, Sequelize, Product } = require("../models");
 const Op = Sequelize.Op;
+const db = require("../models");
 
 // Create a new order
 const createNewOrder = async (req, res) => {
@@ -150,6 +151,63 @@ const getCountProductId = async (req, res) => {
     .catch((error) => res.status(500).send({ error: error.message }));
 };
 
+const reportByProduct = async (req, res) => {
+  try {
+    const { store_id } = req.params;
+
+    const products = await db.Product.findAll({
+      where: { store_id: store_id }, // Filter products by store_id
+      attributes: ['product_id'], // Only include product_id in the response
+    });
+
+    const productIds = products.map((product) => product.product_id);
+
+    const orderDetails = await db.OrderDetail.findAll({
+      where: { product_id: productIds },
+      attributes: ['order_id'],
+    });
+
+    const uniqueOrderIds = [...new Set(orderDetails.map((orderDetail) => orderDetail.order_id))];
+
+    res.status(200).json({ data: uniqueOrderIds.length });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+
+async function getTotalTransactionProduct(req, res, next) {
+  const { product_id } = req.params;
+
+  try {
+    const product = await Product.findByPk(product_id, {
+      include: [
+        {
+          model: OrderDetail,
+          attributes: [
+            [db.sequelize.fn('sum', db.sequelize.col('qty')), 'total_quantity'],
+          ],
+          raw: true,
+        },
+      ],
+    });
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Extracting the total quantity directly from the OrderDetails array
+    const totalQuantity = product.OrderDetails?.total_quantity || 0;
+
+    return res.json({ productName : product.product_name, totalQuantity : product.OrderDetails[0] });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
+
 // Exporting the functions
 module.exports = {
   getOrderById,
@@ -157,4 +215,6 @@ module.exports = {
   getOrderDetailsById,
   addProductToOrder,
   getCountProductId,
+  reportByProduct,
+  getTotalTransactionProduct
 };

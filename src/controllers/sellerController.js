@@ -105,30 +105,41 @@ const getProductPic = (req, res) => {
 };
 
 const editProduct = async (req, res) => {
-  const { user_id } = req.body;
+  const { store_id } = req.params;
   const { product_id } = req.params;
 
-  const { product_name, price, quantity, rating, category_id } = req.body;
+  // const { data } = req.body;
+  const { user_id, product_name, product_description, price, quantity, rating, category_id } = req.body;
 
   try {
     // Validate seller permission
-    const user = await models.User.findByPk(user_id);
+    const user = await models.User.findByPk(req.body.data.user_id);
     const product = await models.Product.findByPk(product_id);
+    const store = await models.Store.findByPk(store_id);
 
-    if (!user || user.role !== "seller" || product.store_id !== user.user_id) {
+    console.log(req.body.user_id);
+    console.log(user_id);
+    console.log(store_id);
+    console.log(req.body.data.user_id);
+
+    if (!user || user.role !== "seller" || store.user_id !== user.user_id) {
       return res
         .status(403)
         .send("You don't have permission to edit this product");
     }
 
+    const temp = {
+      product_name: req.body.data.product_name,
+      product_description: req.body.data.product_description,
+      price: req.body.data.price,
+      quantity: req.body.data.quantity,
+      rating: req.body.data.rating,
+      category_id: req.body.data.category_id,
+
+    }
+
     // Update product
-    await product.update({
-      product_name,
-      price,
-      quantity,
-      rating,
-      category_id,
-    });
+    await product.update(temp);
 
     // Return updated product
     res.json(product);

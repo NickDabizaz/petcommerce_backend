@@ -77,7 +77,7 @@ exports.getCart = async (req, res) => {
     const cartItems = carts.map((cart) => {
       const { cart_id, qty, Product } = cart;
       console.log(cart);
-      const { product_name, price, product_id } = Product;
+      const { product_name, price, product_id, quantity } = Product;
       const subtotal = qty * price;
       total += subtotal;
       return {
@@ -85,6 +85,7 @@ exports.getCart = async (req, res) => {
         qty,
         product_id,
         product_name,
+        quantity,
         price,
         subtotal,
       };
