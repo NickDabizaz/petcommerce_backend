@@ -1,26 +1,3 @@
-// const multer = require("multer");
-// const fs = require("fs-extra");
-// const path = require("path");
-// const models = require("../models");
-
-// const upload = multer({
-//   limits: {
-//     fileSize: 5 * 1024 * 1024, // 5 MB in bytes
-//   },
-//   storage: multer.diskStorage({
-//     destination: async (req, file, callback) => {
-      
-//     },
-//     filename: async (req, file, callback) => {
-
-      
-//     },
-//   }),
-// });
-
-// module.exports = upload;
-
-
 const multer = require("multer");
 const fs = require("fs-extra");
 const path = require("path");
@@ -32,7 +9,6 @@ const upload = multer({
   },
   storage: multer.diskStorage({
     destination: async (req, file, callback) => {
-      // ... (bagian destination tetap sama)
       let type = req.params.type;
       let path = ``;
       if (type === "profilpic") {
@@ -53,7 +29,7 @@ const upload = multer({
       callback(null, path);
     },
     filename: async (req, file, callback) => {
-      // ... (bagian filename tetap sama)
+
       let type = req.params.type;
       let user_id = req.params.user_id;
 
@@ -108,24 +84,9 @@ const upload = multer({
       }
     },
   }),
-}).single("file"); // Ubah "file" sesuai dengan nama field pada form HTML
+});
 
-module.exports = (req, res, next) => {
-  upload(req, res, function (err) {
-    if (err instanceof multer.MulterError) {
-      // Kesalahan dari Multer (termasuk batasan ukuran file)
-      res.status(400).json({
-        error: "Ukuran file terlalu besar. Maksimum 1 MB diizinkan.",
-      });
-    } else if (err) {
-      // Kesalahan lainnya
-      res.status(500).json({
-        error: "Terjadi kesalahan saat mengunggah file.",
-      });
-    } else {
-      // Tidak ada kesalahan, lanjut ke middleware berikutnya
-      next();
-    }
-  });
-};
+module.exports = upload;
+
+
 
