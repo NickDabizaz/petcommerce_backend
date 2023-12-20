@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const corsOptions = {
-  origin: "https://dulcet-scone-92676f.netlify.app", // Mengizinkan akses dari alamat ini
+  origin: "https://petcommerce-kaqiiq80p-nicklaus-projects.vercel.app", // Mengizinkan akses dari alamat ini
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
