@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const corsOptions = {
-  origin: "http://localhost:5173", // Mengizinkan akses dari alamat ini
+  origin: "https://dulcet-scone-92676f.netlify.app", // Mengizinkan akses dari alamat ini
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
@@ -21,9 +21,9 @@ models.sequelize.sync().then(() => {
   console.log("Database terhubung");
 
   // Set up routing
-  app.get("/", (req,res) => {
-    return res.send("Testing Server...")
-  })
+  app.get("/", (req, res) => {
+    return res.send("Testing Server...");
+  });
   app.use("/users", require("./routes/userRoutes"));
   app.use("/sellers", require("./routes/sellerRoutes"));
   app.use("/admin", require("./routes/adminRoutes"));
@@ -46,7 +46,7 @@ models.sequelize.sync().then(() => {
       return res.status(400).send({
         success: false,
         message: "Content can not be empty!",
-      }); 
+      });
     }
 
     try {
@@ -60,7 +60,7 @@ models.sequelize.sync().then(() => {
         user_id: req.body.user_id,
         order_date: new Date(),
         total_price: req.body.transaction_details.gross_amount,
-      })
+      });
     } catch (error) {
       console.log({ error });
       return res.status(500).json({ success: false, message: error.message });
