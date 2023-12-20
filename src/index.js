@@ -9,7 +9,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 const corsOptions = {
-  origin: "https://petcommerce-two.vercel.app", // Mengizinkan akses dari alamat ini
+  origin: "https://petcommerce-site.preview-domain.com", // Mengizinkan akses dari alamat ini
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
