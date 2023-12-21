@@ -109,7 +109,15 @@ const editProduct = async (req, res) => {
   const { product_id } = req.params;
 
   // const { data } = req.body;
-  const { user_id, product_name, product_description, price, quantity, rating, category_id } = req.body;
+  const {
+    user_id,
+    product_name,
+    product_description,
+    price,
+    quantity,
+    rating,
+    category_id,
+  } = req.body;
 
   try {
     // Validate seller permission
@@ -135,8 +143,7 @@ const editProduct = async (req, res) => {
       quantity: req.body.data.quantity,
       rating: req.body.data.rating,
       category_id: req.body.data.category_id,
-
-    }
+    };
 
     // Update product
     await product.update(temp);

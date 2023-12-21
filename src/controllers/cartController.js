@@ -104,29 +104,24 @@ exports.getCart = async (req, res) => {
 exports.getOneCart = async (req, res) => {
   try {
     const { user_id, product_id } = req.params;
-    console.log({user_id});
-    console.log({product_id});
+    console.log({ user_id });
+    console.log({ product_id });
 
     const carts = await ShoppingCart.findOne({
-      where: { user_id, product_id, deletedAt: null }
+      where: { user_id, product_id, deletedAt: null },
     });
 
-    if(!carts){
-      return res.status(200).json(
-        {
-          available: false,
-        }
-      )
+    if (!carts) {
+      return res.status(200).json({
+        available: false,
+      });
     }
 
     if (carts) {
-      return res.status(200).json(
-        {
-          available: true,
-          qty: carts.qty
-        }
-      )
-        
+      return res.status(200).json({
+        available: true,
+        qty: carts.qty,
+      });
     }
   } catch (err) {
     console.error(err);
