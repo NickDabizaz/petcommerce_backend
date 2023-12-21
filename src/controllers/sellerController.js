@@ -63,17 +63,17 @@ const addProduct = async (req, res) => {
       return res.status(403).send("You don't have permission to add products");
     }
 
-    // Generate product id
-    const latestProduct = await models.Product.max('product_id', {
-      where: {
-        deletedAt: null,
-      },
+    // Find the maximum product ID (including soft-deleted products)
+    const latestProduct = await models.Product.findOne({
+      paranoid: false, // Include soft-deleted products
+      order: [["product_id", "DESC"]],
+      attributes: ["product_id"],
     });
 
     let nextProductId = 1;
 
     if (latestProduct) {
-      nextProductId = latestProduct + 1;
+      nextProductId = latestProduct.product_id + 1;
     }
 
     // Create new product
