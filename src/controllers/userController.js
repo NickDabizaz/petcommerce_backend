@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 const models = require("../models");
 const Joi = require("joi");
-const { Store , User} = require("../models");
-const bcrypt = require('bcrypt');
+const { Store, User } = require("../models");
+const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 const generateToken = (user_id, user_email) => {
@@ -122,10 +122,9 @@ const login = async (req, res) => {
   }
 };
 
-
 const profilpic = async (req, res) => {
-  return res.status(201).json({ msg: "profile picture berhasil di upload" })
-}
+  return res.status(201).json({ msg: "profile picture berhasil di upload" });
+};
 
 const getProfilpic = (req, res) => {
   const user_id = req.params.user_id;
@@ -172,7 +171,7 @@ const logout = async (req, res) => {
 };
 
 const getUser = async (req, res) => {
-  const { user_id } = req.params
+  const { user_id } = req.params;
   try {
     // Mencari pengguna berdasarkan ID dalam token
     const user = await models.User.findOne({
@@ -192,34 +191,39 @@ const getUser = async (req, res) => {
 
 const getAllUser = async (req, res) => {
   try {
-    const users = await User.findAll()
+    const users = await User.findAll();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 const getUserStore = async (req, res) => {
   try {
-    const { user_id } = req.params
-    const store = await Store.findAll({ where: { user_id: user_id } })
+    const { user_id } = req.params;
+    const store = await Store.findAll({ where: { user_id: user_id } });
     res.status(200).json(store);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 const updateUser = async (req, res) => {
   try {
-    const { user_id } = req.params
-    const { name, email, address, phone_number } = req.body
-    const user = await models.User.findOne({ where: { user_id: user_id } })
-    const result = await user.update({ name: name, email: email, address: address, phone_number: phone_number })
-    res.json(result)
+    const { user_id } = req.params;
+    const { name, email, address, phone_number } = req.body;
+    const user = await models.User.findOne({ where: { user_id: user_id } });
+    const result = await user.update({
+      name: name ? name : user.name,
+      email: email ? email : user.email,
+      address: address ? address : user.address,
+      phone_number: phone_number ? phone_number : user.phone_number,
+    });
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-}
+};
 
 module.exports = {
   register,
@@ -230,5 +234,5 @@ module.exports = {
   updateUser,
   profilpic,
   getProfilpic,
-  getAllUser
+  getAllUser,
 };
