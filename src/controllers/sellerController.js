@@ -64,18 +64,16 @@ const addProduct = async (req, res) => {
     }
 
     // Generate product id
-    const latestProduct = await models.Product.findOne({
+    const latestProduct = await models.Product.max('product_id', {
       where: {
         deletedAt: null,
       },
-      order: [["product_id", "DESC"]],
-      attributes: ["product_id"],
     });
 
     let nextProductId = 1;
 
     if (latestProduct) {
-      nextProductId = latestProduct.product_id + 1;
+      nextProductId = latestProduct + 1;
     }
 
     // Create new product
