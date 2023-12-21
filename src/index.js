@@ -16,7 +16,7 @@ app.use(express.static('public', {
   },
 }));
 const corsOptions = {
-  origin: ["https://petcommerce.site","http://localhost:3576"], // Mengizinkan akses dari alamat ini
+  origin: ["https://petcommerce.site","http://localhost:5173"], // Mengizinkan akses dari alamat ini
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
 };
