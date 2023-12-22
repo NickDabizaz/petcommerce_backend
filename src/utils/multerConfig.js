@@ -34,6 +34,7 @@ const upload = multer({
         where: {
           deletedAt: null,
         },
+        paranoid : false,
         order: [["product_id", "DESC"]],
         attributes: ["product_id"],
       });
@@ -42,6 +43,7 @@ const upload = multer({
         where: {
           deletedAt: null,
         },
+        paranoid : false,
         order: [["post_id", "DESC"]],
         attributes: ["post_id"],
       });
@@ -50,6 +52,7 @@ const upload = multer({
         where : {
           deletedAt : null
         },
+        paranoid : false,
         order: [["store_id", "DESC"]],
         attributes: ["store_id"]
       })
