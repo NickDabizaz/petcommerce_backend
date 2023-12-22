@@ -31,27 +31,18 @@ const upload = multer({
       let user_id = req.params.user_id;
 
       const latestProduct = await models.Product.findOne({
-        where: {
-          deletedAt: null,
-        },
         paranoid : false,
         order: [["product_id", "DESC"]],
         attributes: ["product_id"],
       });
 
       const latestPost = await models.Post.findOne({
-        where: {
-          deletedAt: null,
-        },
         paranoid : false,
         order: [["post_id", "DESC"]],
         attributes: ["post_id"],
       });
 
       const lastestStore = await models.Store.findOne({
-        where : {
-          deletedAt : null
-        },
         paranoid : false,
         order: [["store_id", "DESC"]],
         attributes: ["store_id"]
